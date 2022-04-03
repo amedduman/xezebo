@@ -1,10 +1,15 @@
 using UnityEngine;
+using Xezebo.Input;
+using Zenject;
 
-namespace Player
+namespace Xezebo.Player
 {
     
 public class PlayerMovementController : MonoBehaviour
 {
+	[Inject]
+	PlayerInputBroadcaster _playerInputBroadcaster;
+	
 	CharacterController _controller;
 	[SerializeField] GameObject mainCamera;
 	[SerializeField] PlayerAnimatorController playerAnimCtrl;
@@ -78,7 +83,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (Grounded)
         {
-	        bool jumpInput_ = PlayerInputBroadcaster.Instance.Jump();
+	        bool jumpInput_ = _playerInputBroadcaster.Jump();
 	        
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
@@ -142,8 +147,8 @@ public class PlayerMovementController : MonoBehaviour
     }
 	private void Move()
 	{
-		Vector2 moveInput_ = PlayerInputBroadcaster.Instance.Move();
-		bool sprintInput_ = PlayerInputBroadcaster.Instance.Sprint();
+		Vector2 moveInput_ = _playerInputBroadcaster.Move();
+		bool sprintInput_ = _playerInputBroadcaster.Sprint();
 
 		// set target speed based on move speed, sprint speed and if sprint is pressed
 		float targetSpeed_ = sprintInput_ ? SprintSpeed : MoveSpeed;

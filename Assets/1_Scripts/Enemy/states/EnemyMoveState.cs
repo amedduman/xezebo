@@ -1,7 +1,7 @@
 using UnityEngine;
-using StateMachine;
+using Xezebo.StateMachine;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class EnemyMoveState : IState
     {

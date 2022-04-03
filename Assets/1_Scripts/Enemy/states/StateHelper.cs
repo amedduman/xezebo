@@ -1,7 +1,7 @@
-﻿using Player;
+﻿using Xezebo.Player;
 using UnityEngine;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public static class StateHelper
     {

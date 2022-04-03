@@ -1,12 +1,10 @@
 using UnityEngine;
 
-namespace Misc
+namespace Xezebo.Misc
 {
-    public class Raycaster : MonoBehaviour
+    public static class Raycaster
     {
-        [SerializeField] Transform origin;
-    
-        public RaycastHit ShootRay()
+        public static RaycastHit ShootRay(Transform origin)
         {
             Ray ray = new Ray(origin.position, origin.forward);
             bool hasHit = Physics.Raycast(ray, out RaycastHit hitInfo);

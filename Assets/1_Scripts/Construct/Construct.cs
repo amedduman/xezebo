@@ -1,4 +1,4 @@
-using Enemy;
+using Xezebo.Enemy;
 using UnityEngine;
 
 namespace Construct

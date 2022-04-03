@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace Equipment
+namespace Xezebo.Equipment
 {
     public class Bullet : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player
+namespace Xezebo.Player
 {
     public class PlayerRigidbodyPush : MonoBehaviour
     {

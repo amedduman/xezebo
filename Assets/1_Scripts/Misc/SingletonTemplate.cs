@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Misc
+namespace Xezebo.Misc
 {
     public class SingletonTemplate<T> : MonoBehaviour where T : MonoBehaviour
     { 

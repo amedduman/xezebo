@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Misc;
+using Xezebo.Misc;
 using UnityEngine;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class HidingPointsManager : SingletonTemplate<HidingPointsManager>
     {

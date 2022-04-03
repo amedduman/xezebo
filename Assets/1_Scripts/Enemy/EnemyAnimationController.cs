@@ -1,7 +1,7 @@
-﻿using StateMachine;
+﻿using Xezebo.StateMachine;
 using UnityEngine;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class EnemyAnimationController : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class RandomCharPicker : MonoBehaviour
     {

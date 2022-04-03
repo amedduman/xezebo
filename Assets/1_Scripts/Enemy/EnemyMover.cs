@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class EnemyMover : MonoBehaviour
     {

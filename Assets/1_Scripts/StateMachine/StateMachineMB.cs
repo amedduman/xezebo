@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StateMachine
+namespace Xezebo.StateMachine
 {
     /// <summary>
     /// Created by Adam Chandler, 2020

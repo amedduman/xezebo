@@ -1,5 +1,5 @@
 
-namespace StateMachine
+namespace Xezebo.StateMachine
 {
     public interface IState
     {

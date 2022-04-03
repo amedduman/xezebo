@@ -1,10 +1,11 @@
 using System;
-using Player;
+using Xezebo.Player;
 using UnityEngine;
-using StateMachine;
+using Xezebo.StateMachine;
 using TMPro;
+using Zenject;
 
-namespace Enemy
+namespace Xezebo.Enemy
 {
     public class EnemySM : StateMachineMB
     {
@@ -19,14 +20,20 @@ namespace Enemy
         EnemyMover enemyMover;
         EnemyAnimationController enemyAnimationController;
         [SerializeField] float startToMoveRange = 5;
-        
+        PlayerEntity _playerEntity;
 
+        [Inject]
+        void Construct(PlayerEntity playerEntity)
+        {
+            _playerEntity = playerEntity;
+        }
+        
         void Awake()
         {
             enemyMover = GetComponent<EnemyMover>();
             enemyAnimationController = GetComponent<EnemyAnimationController>();
             
-            IdleState = new EnemyIdleState(this, startToMoveRange);
+            IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
         }
 

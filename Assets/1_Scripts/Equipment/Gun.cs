@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Equipment
+namespace Xezebo.Equipment
 {
     public class Gun : MonoBehaviour
     {
