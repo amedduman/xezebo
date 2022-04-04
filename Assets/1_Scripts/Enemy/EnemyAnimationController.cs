@@ -19,5 +19,10 @@ namespace Xezebo.Enemy
                 animator.Play("Running");
             }
         }
+
+        public void TurnRagdoll()
+        {
+            animator.enabled = false;
+        }
     }
 }

@@ -14,10 +14,12 @@ namespace Xezebo.Player
         Camera _mainCam;
         [Inject(Id = "activeGun")]
         Gun _gun;
+
+        [SerializeField] LayerMask _layerMask;
         
         void Awake()
         {
-            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, _gun);
+            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, _gun, _layerMask);
         }
 
         void OnEnable()

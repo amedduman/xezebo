@@ -12,12 +12,14 @@ namespace Xezebo.Player
         readonly Gun _gun;
         readonly Camera _mainCam;
         readonly PlayerInputBroadcaster _inputBroadcaster;
+        readonly LayerMask _layer; 
 
-        public PlayerAttackController(PlayerInputBroadcaster inputBroadcaster, Camera cam, Gun gun)
+        public PlayerAttackController(PlayerInputBroadcaster inputBroadcaster, Camera cam, Gun gun, LayerMask layer)
         {
             _inputBroadcaster = inputBroadcaster;
             _mainCam = cam;
             _gun = gun;
+            _layer = layer;
         }
         
         public void RegisterToInputEvents()
@@ -33,7 +35,7 @@ namespace Xezebo.Player
 
         void Shoot(InputAction.CallbackContext Obj)
         {
-            RaycastHit rayCast = Raycaster.ShootRay(_mainCam.transform);
+            RaycastHit rayCast = Raycaster.ShootRay(_mainCam.transform, _layer);
             if (rayCast.collider != null)
             {
                 _gun.Fire(rayCast.point);

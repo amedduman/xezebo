@@ -23,6 +23,11 @@ namespace Xezebo.Enemy
             StartCoroutine(CheckMovementSituation(InvokeWhenMoveComplete, dst));
         }
 
+        public void Die()
+        {
+            agent.enabled = false;
+        }
+
         void SetDestination(Vector3 destination)
         {
             agent.destination = destination;

@@ -13,6 +13,7 @@ namespace Xezebo.Enemy
         public IState IdleState { get; private set; }
         public IState MoveState { get; private set; }
         public IState GetDamageState { get; private set; }
+        public IState DeathSate { get; private set; }
 
         // debugging
         public TextMeshPro enemyStateText;
@@ -21,6 +22,10 @@ namespace Xezebo.Enemy
         EnemyMover enemyMover;
         EnemyAnimationController enemyAnimationController;
         [SerializeField] float startToMoveRange = 5;
+        public int Hp = 20;
+        public int DamagePerShot = 10;
+
+        
         PlayerEntity _playerEntity;
 
         [Inject]
@@ -33,10 +38,12 @@ namespace Xezebo.Enemy
         {
             enemyMover = GetComponent<EnemyMover>();
             enemyAnimationController = GetComponent<EnemyAnimationController>();
+            Collider hitBox = GetComponent<Collider>();
             
             IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
-            GetDamageState = new EnemyGetDamageState();
+            GetDamageState = new EnemyGetDamageState(this);
+            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover);
         }
 
         void Start()
@@ -46,6 +53,7 @@ namespace Xezebo.Enemy
 
         public void GetDamage()
         {
+            Debug.Log("get damage");
             ChangeState(GetDamageState);
         }
 

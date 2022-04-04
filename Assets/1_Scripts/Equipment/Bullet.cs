@@ -9,14 +9,14 @@ namespace Xezebo.Equipment
         // TODO: implement a bullet speed mechanic
         public void ShootAtTarget(Vector3 bulletDestination)
         {
-            transform.DOMove(bulletDestination, 0.2f)
-                .OnComplete( () => Destroy(gameObject));
+            transform.DOMove(bulletDestination, 0.2f);
+            // .OnComplete( () => Destroy(gameObject));
         }
 
         public void ShootInToTheAir(Transform spawnPoint)
         {
-            transform.DOMove(transform.position + spawnPoint.forward * distance, .2f)
-                .OnComplete( () => Destroy(gameObject));
+            transform.DOMove(transform.position + spawnPoint.forward * distance, .2f);
+                // .OnComplete( () => Destroy(gameObject));
         }
 
         void OnDisable()
