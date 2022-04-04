@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using Xezebo.Enemy;
 using Xezebo.Equipment;
 using Xezebo.Misc;
 using Xezebo.Input;
@@ -36,6 +37,10 @@ namespace Xezebo.Player
             if (rayCast.collider != null)
             {
                 _gun.Fire(rayCast.point);
+                if (rayCast.transform.TryGetComponent(out EnemySM enemy))
+                {
+                    enemy.GetDamage();
+                }
             }
             // when it looks at the sky bullet goes forward 
             else

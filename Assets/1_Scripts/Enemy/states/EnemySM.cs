@@ -12,6 +12,7 @@ namespace Xezebo.Enemy
         // states
         public IState IdleState { get; private set; }
         public IState MoveState { get; private set; }
+        public IState GetDamageState { get; private set; }
 
         // debugging
         public TextMeshPro enemyStateText;
@@ -35,6 +36,7 @@ namespace Xezebo.Enemy
             
             IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
+            GetDamageState = new EnemyGetDamageState();
         }
 
         void Start()
@@ -42,12 +44,17 @@ namespace Xezebo.Enemy
             ChangeState(IdleState);
         }
 
+        public void GetDamage()
+        {
+            ChangeState(GetDamageState);
+        }
+
         public override void OnStateChange(IState State)
         {
             enemyAnimationController.StateChange(State);
         }
 
-        void OnDrawGizmos()
+        void OnDrawGizmosSelected()
         {
             // when in idle state this will be the range. if player pass this the enemy will give reaction accordingly.
             Gizmos.DrawWireSphere(transform.position, startToMoveRange);
