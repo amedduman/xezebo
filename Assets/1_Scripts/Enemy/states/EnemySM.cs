@@ -3,6 +3,7 @@ using Xezebo.Player;
 using UnityEngine;
 using Xezebo.StateMachine;
 using TMPro;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Xezebo.Enemy
@@ -17,12 +18,15 @@ namespace Xezebo.Enemy
 
         // debugging
         public TextMeshPro enemyStateText;
-        
+
         // required
+        [SerializeField] Image _hpImage;
+        [SerializeField] Canvas _hpCanvas;
         EnemyMover enemyMover;
         EnemyAnimationController enemyAnimationController;
         [SerializeField] float startToMoveRange = 5;
         public int Hp = 20;
+        public int HpMax = 20;
         public int DamagePerShot = 10;
 
         
@@ -42,8 +46,8 @@ namespace Xezebo.Enemy
             
             IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
-            GetDamageState = new EnemyGetDamageState(this);
-            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover);
+            GetDamageState = new EnemyGetDamageState(this, _hpImage);
+            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover, _hpCanvas);
         }
 
         void Start()
@@ -53,7 +57,6 @@ namespace Xezebo.Enemy
 
         public void GetDamage()
         {
-            Debug.Log("get damage");
             ChangeState(GetDamageState);
         }
 
