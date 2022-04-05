@@ -7,7 +7,6 @@ namespace Xezebo.Enemy
 {
     public class EnemyMover : MonoBehaviour
     {
-        Transform[] hidingPoints;
         int? currentHidingPointIndex = null;
         NavMeshAgent agent;
 
