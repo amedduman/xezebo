@@ -8,7 +8,7 @@ namespace Xezebo.Player
 {
     public class PlayerEntity : MonoBehaviour
     {
-        public int MaxAmmo = 10;
+        public float MaxHealth = 100;
         
         [Inject] 
         PlayerInputBroadcaster _inputBroadcaster;

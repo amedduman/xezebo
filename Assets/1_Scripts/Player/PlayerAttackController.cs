@@ -42,10 +42,6 @@ namespace Xezebo.Player
 
         void Shoot(InputAction.CallbackContext Obj)
         {
-            if (_gameManager == null)
-            {
-                Debug.Log("null");
-            }
             if (!_gameManager.CanShoot()) return;
 
             RaycastHit rayCast = Raycaster.ShootRay(_mainCam.transform, _layer);
