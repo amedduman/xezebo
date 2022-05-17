@@ -21,6 +21,9 @@ namespace Xezebo.Enemy
         EnemyMover enemyMover;
         EnemyAnimationController enemyAnimationController;
         [SerializeField] float startToMoveRange = 5;
+        [SerializeField] private GameObject _bloodParticle;
+
+        
 
         PlayerEntity _playerEntity;
 
@@ -38,7 +41,7 @@ namespace Xezebo.Enemy
             
             IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
-            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover);
+            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover, _bloodParticle);
         }
 
         void Start()
