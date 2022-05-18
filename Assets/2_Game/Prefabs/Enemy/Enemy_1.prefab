@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyStateText: {fileID: 6205472722513960468}
-  startToMoveRange: 5
+  startToMoveRange: 15
   _bloodParticle: {fileID: 4824055248858774551}
 --- !u!114 &6205472723089090620
 MonoBehaviour:
