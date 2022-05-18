@@ -13,7 +13,7 @@ namespace Xezebo.Player
         [Inject] 
         PlayerInputBroadcaster _inputBroadcaster;
         [Inject] 
-        GameManager _gameManager;
+        ResourceHandler _resourceHandler;
         [Inject(Id = "main")]
         Camera _mainCam;
         [Inject(Id = "activeGun")]
@@ -24,7 +24,7 @@ namespace Xezebo.Player
         
         void Awake()
         {
-            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, _gun, _layerMask, _gameManager);
+            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, _gun, _layerMask, _resourceHandler);
         }
 
         void OnEnable()

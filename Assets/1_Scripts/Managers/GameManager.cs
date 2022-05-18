@@ -1,40 +1,58 @@
+using System;
 using UnityEngine;
-using Xezebo.Data;
-using Xezebo.Player;
-using Zenject;
+using UnityEngine.SceneManagement;
 
 namespace Xezebo.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        [Inject] UIHandler _uiHandler;
+        public event Action<int> OnAmmoUpdated;
+        public event Action<int> OnLevelTimeUpdated;
+        public event Action<int> OnPlayerHealthUpdated;
 
-        [SerializeField] PlayerMaxAmmo _maxAmmoData;
-        
-        
-        int _maxAmmo;
-        int _ammo;
-
-        void Start()
+        public void AmmoUpdated(int ammo)
         {
-            _maxAmmo = _maxAmmoData.MaxAmmo;
-            _ammo = _maxAmmo;
+            OnAmmoUpdated?.Invoke(ammo);
         }
 
-        public bool CanShoot()
+        public void LevelTimeUpdated(int time)
         {
-            if (_ammo <= 0) return false;
-
-            UpdateAmmo();
-
-            return true;
+            OnLevelTimeUpdated?.Invoke(time);
+            CheckFail(time);
         }
 
-        void UpdateAmmo()
+        public void PlayerHealthUpdated(int health)
         {
-            _ammo--;
-            _ammo = Mathf.Clamp(_ammo,0, _maxAmmo);
-            _uiHandler.ChangeAmmoText(_ammo);
+            OnPlayerHealthUpdated?.Invoke(health);
+            CheckFail(health);
+        }
+
+        [SerializeField] private GameObject tempGameOverUI;
+        private void CheckFail(int time)
+        {
+            if (time <= 0)
+            {
+                Time.timeScale = 0;
+                tempGameOverUI.SetActive(true);
+            }
+        }
+
+        private void Start()
+        {
+            Time.timeScale = 1;
+        }
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+            {
+                RestartTheGame();
+            }
+        }
+
+        void RestartTheGame()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
