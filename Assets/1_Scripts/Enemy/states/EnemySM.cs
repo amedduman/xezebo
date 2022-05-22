@@ -2,12 +2,15 @@ using Xezebo.Player;
 using UnityEngine;
 using Xezebo.StateMachine;
 using TMPro;
+using Xezebo.Managers;
 using Zenject;
 
 namespace Xezebo.Enemy
 {
     public class EnemySM : StateMachineMB
     {
+        [Inject] private EnemyHandler _enemyHandler;
+        
         // states
         public IState IdleState { get; private set; }
         public IState MoveState { get; private set; }
@@ -41,15 +44,16 @@ namespace Xezebo.Enemy
             
             IdleState = new EnemyIdleState(this, startToMoveRange, _playerEntity);
             MoveState = new EnemyMoveState(this, enemyMover);
-            DeathSate = new EnemyDeathState(enemyAnimationController, hitBox, enemyMover, _bloodParticle);
+            DeathSate = new EnemyDeathState(this, enemyAnimationController, hitBox, enemyMover, _bloodParticle, _enemyHandler);
         }
 
         void Start()
         {
             ChangeState(IdleState);
+            _enemyHandler.RegisterEnemy(this);
         }
 
-        public void GetDamage()
+        public void Die()
         {
             ChangeState(DeathSate);
         }

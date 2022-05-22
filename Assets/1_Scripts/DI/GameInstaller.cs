@@ -8,10 +8,13 @@ using Xezebo.Player;
 
 public class GameInstaller : MonoInstaller
 {
-    [SerializeField] PlayerEntity _playerEntity;
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] GameManager _gameManager;
+    
     [SerializeField] UIHandler _uiHandler;
-    [SerializeField] private ResourceHandler _resourceHandler;
+    [SerializeField] EnemyHandler _enemyHandler;
+    [SerializeField] ResourceHandler _resourceHandler;
+    
+    [SerializeField] PlayerEntity _playerEntity;
     [SerializeField] Camera _mainCam;
     [SerializeField] Gun _activeGun;
     [SerializeField] PlayerInputBroadcaster _playerInputBroadcaster;
@@ -22,6 +25,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<GameManager>().FromInstance(_gameManager).AsSingle().NonLazy();
         Container.Bind<UIHandler>().FromInstance(_uiHandler).AsSingle().NonLazy();
         Container.Bind<ResourceHandler>().FromInstance(_resourceHandler).AsSingle().NonLazy();
+        Container.Bind<EnemyHandler>().FromInstance(_enemyHandler).AsSingle().NonLazy();
         Container.Bind<PlayerInputBroadcaster>().FromInstance(_playerInputBroadcaster).AsSingle().NonLazy();
         Container.Bind<PlayerEntity>().FromInstance(_playerEntity).AsSingle().NonLazy();
         Container.Bind<Camera>().WithId("main").FromInstance(_mainCam).AsSingle().NonLazy(); // kimler inject ediyo kamerayi nasil gorebilirim? infiliable code'ta anlatiyodu sanki ilk videoda

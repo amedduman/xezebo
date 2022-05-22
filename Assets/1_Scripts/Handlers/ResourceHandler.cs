@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -18,9 +19,23 @@ public class ResourceHandler : MonoBehaviour
     int _levelTime;
     int _health;
 
-    private Coroutine _decreaseHealthCoroutine;
-    private Coroutine _increaseHealthCoroutine;
-    private Coroutine _increaseAmmoCoroutine;
+    Coroutine _decreaseHealthCoroutine;
+    Coroutine _increaseHealthCoroutine;
+    Coroutine _increaseAmmoCoroutine;
+
+    bool _hasLevelEnd;
+
+    private void OnEnable()
+    {
+        _gameManager.OnWinLevel += HandleWinLevel;
+        _gameManager.OnFailLevel += HandleFailLevel;
+    }
+
+    private void OnDisable()
+    {
+        _gameManager.OnWinLevel -= HandleWinLevel;
+        _gameManager.OnFailLevel -= HandleFailLevel;
+    }
 
     void Start()
     {
@@ -32,8 +47,22 @@ public class ResourceHandler : MonoBehaviour
         _decreaseHealthCoroutine = StartCoroutine(DecreaseHealth());
     }
     
+    private void HandleFailLevel()
+    {
+        _hasLevelEnd = true;
+        StopAllCoroutines();
+    }
+
+    private void HandleWinLevel()
+    {
+        _hasLevelEnd = true;
+        StopAllCoroutines();
+    }
+    
     public void StartRefillResources()
     {
+        if (_hasLevelEnd) return;
+        
         StopCoroutine(_decreaseHealthCoroutine);
         _increaseHealthCoroutine = StartCoroutine(IncreaseHealth());
 
@@ -42,6 +71,8 @@ public class ResourceHandler : MonoBehaviour
 
     public void StopRefillResources()
     {
+        if (_hasLevelEnd) return;
+        
         StopCoroutine(_increaseHealthCoroutine);
         _decreaseHealthCoroutine = StartCoroutine(DecreaseHealth());
         

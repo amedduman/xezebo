@@ -50,7 +50,7 @@ namespace Xezebo.Player
                 _gun.Fire(rayCast.point);
                 if (rayCast.transform.TryGetComponent(out EnemySM enemy))
                 {
-                    enemy.GetDamage();
+                    enemy.Die();
                 }
             }
             // when it looks at the sky bullet goes forward 
