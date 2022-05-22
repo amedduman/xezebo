@@ -1,11 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using Xezebo.Managers;
+using Zenject;
 
 namespace Xezebo.Input
 {
     
 public class PlayerInputBroadcaster : MonoBehaviour
 {
+    [Inject] private GameManager _gameManager;
+    
     public bool cursorLocked = true;
 
     [SerializeField] InputActionReference moveInputActionReference;
@@ -13,7 +18,29 @@ public class PlayerInputBroadcaster : MonoBehaviour
     [SerializeField] InputActionReference jumpInputActionReference;
     [SerializeField] InputActionReference sprintInputActionReference;
     [SerializeField] InputActionReference fireInputActionReference;
+
+    private void OnEnable()
+    {
+        _gameManager.OnWinLevel += HandleWinLevel;
+        _gameManager.OnFailLevel += HandleFailLevel;
+    }
+
+    private void OnDisable()
+    {
+        _gameManager.OnWinLevel -= HandleWinLevel;
+        _gameManager.OnFailLevel -= HandleFailLevel;
+
+    }
     
+    private void HandleFailLevel()
+    {
+        Destroy(gameObject);
+    }
+
+    private void HandleWinLevel()
+    {
+        Destroy(gameObject);
+    }
 
     public Vector2 Move()
     {

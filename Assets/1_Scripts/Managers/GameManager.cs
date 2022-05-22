@@ -66,6 +66,10 @@ namespace Xezebo.Managers
                 Debug.LogError("there is an error with enemy count logic.");
                 count = 0;
             }
+            else if (count == 0)
+            {
+                WinLevel();
+            }
 
             _remainingEnemyCount = count;
             OnEnemyCountUpdated?.Invoke(count);

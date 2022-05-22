@@ -9,7 +9,7 @@ namespace Xezebo.Managers
     {
         [Inject] GameManager _gameManager;
 
-        private bool _hasFailed;
+        private bool _hasLevelEnd;
         
         private void OnEnable()
         {
@@ -25,7 +25,7 @@ namespace Xezebo.Managers
 
         private void Update()
         {
-            if (_hasFailed)
+            if (_hasLevelEnd)
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.R))
                 {
@@ -36,11 +36,12 @@ namespace Xezebo.Managers
 
         private void HandleFailLevel()
         {
-            _hasFailed = true;
+            _hasLevelEnd = true;
         }
 
         private void HandleLevelWin()
         {
+            _hasLevelEnd = true;
         }
 
         void RestartLevel()
