@@ -4,7 +4,7 @@ using Xezebo.Enemy;
 using Xezebo.Equipment;
 using Xezebo.Misc;
 using Xezebo.Input;
-using Xezebo.Managers;
+using Xezebo.Management;
 using Zenject;
 
 namespace Xezebo.Player

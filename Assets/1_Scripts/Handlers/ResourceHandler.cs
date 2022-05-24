@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using Xezebo.Data;
-using Xezebo.Managers;
+using Xezebo.Management;
 using Zenject;
 
 public class ResourceHandler : MonoBehaviour

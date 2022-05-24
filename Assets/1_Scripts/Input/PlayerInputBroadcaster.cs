@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Xezebo.Managers;
+using Xezebo.Management;
 using Zenject;
 
 namespace Xezebo.Input

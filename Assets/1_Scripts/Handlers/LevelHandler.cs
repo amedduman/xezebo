@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Xezebo.Managers
+namespace Xezebo.Management
 {
     public class LevelHandler : MonoBehaviour
     {

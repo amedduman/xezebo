@@ -3,7 +3,7 @@ using UnityEngine;
 using Xezebo.Enemy;
 using Zenject;
 
-namespace Xezebo.Managers
+namespace Xezebo.Management
 {
     public class EnemyHandler : MonoBehaviour
     {

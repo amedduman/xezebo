@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Xezebo.Managers
+namespace Xezebo.Management
 {
     public class GameManager : MonoBehaviour
     {

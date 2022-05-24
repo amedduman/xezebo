@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Xezebo.Managers;
+using Xezebo.Management;
 using Xezebo.StateMachine;
 
 namespace Xezebo.Enemy

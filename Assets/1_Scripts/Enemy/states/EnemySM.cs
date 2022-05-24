@@ -2,7 +2,7 @@ using Xezebo.Player;
 using UnityEngine;
 using Xezebo.StateMachine;
 using TMPro;
-using Xezebo.Managers;
+using Xezebo.Management;
 using Zenject;
 
 namespace Xezebo.Enemy

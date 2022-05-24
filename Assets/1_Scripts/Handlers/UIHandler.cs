@@ -6,7 +6,7 @@ using Xezebo.Data;
 using Xezebo.DI;
 using Zenject;
 
-namespace Xezebo.Managers
+namespace Xezebo.Management
 {
     public class UIHandler : MonoBehaviour
     {
