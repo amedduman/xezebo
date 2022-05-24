@@ -11,9 +11,7 @@ public class ResourceHandler : MonoBehaviour
 {
     [Inject] private GameManager _gameManager;
 
-    [SerializeField] PlayerMaxAmmo _maxAmmoData;
-    [SerializeField] LevelTime _levelTimeData;
-    [SerializeField] private PlayerMaxHealth _maxHealthData;
+    GameValues _gameValues;
     
     int _ammo;
     int _levelTime;
@@ -39,9 +37,14 @@ public class ResourceHandler : MonoBehaviour
 
     void Start()
     {
-        _ammo = _maxAmmoData.MaxAmmo;
-        _levelTime = _levelTimeData.LevelTimeData;
-        _health = _maxHealthData.PlayerMaxHealthData;
+        _gameValues = Resources.Load<GameValues>("GameValues");
+        if (_gameValues == null)
+        {
+            Debug.Log("null game values");
+        }
+        _ammo = _gameValues.MaxAmmo;
+        _levelTime = _gameValues.LevelTimeData;
+        _health = _gameValues.PlayerMaxHealthData;
 
         StartCoroutine(DecreaseLevelTime());
         _decreaseHealthCoroutine = StartCoroutine(DecreaseHealth());
@@ -125,17 +128,17 @@ public class ResourceHandler : MonoBehaviour
 
     void ClampLevelTime()
     {
-        _levelTime = Mathf.Clamp(_levelTime, 0, _levelTimeData.LevelTimeData);
+        _levelTime = Mathf.Clamp(_levelTime, 0, _gameValues.LevelTimeData);
     }
 
     void ClampHealth()
     {
-        _health = Mathf.Clamp(_health, 0, _maxHealthData.PlayerMaxHealthData);
+        _health = Mathf.Clamp(_health, 0, _gameValues.PlayerMaxHealthData);
     }
 
     void ClampAmmo()
     {
-        _ammo = Mathf.Clamp(_ammo, 0, _maxAmmoData.MaxAmmo);
+        _ammo = Mathf.Clamp(_ammo, 0, _gameValues.MaxAmmo);
     }
 
     public bool CanShoot()
@@ -150,7 +153,7 @@ public class ResourceHandler : MonoBehaviour
     void UpdateAmmo()
     {
         _ammo--;
-        _ammo = Mathf.Clamp(_ammo,0, _maxAmmoData.MaxAmmo);
+        _ammo = Mathf.Clamp(_ammo,0, _gameValues.MaxAmmo);
         _gameManager.AmmoUpdated(_ammo);
     }
 }

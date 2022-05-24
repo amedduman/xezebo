@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using Xezebo.Data;
+using Xezebo.DI;
 using Zenject;
 
 namespace Xezebo.Managers
@@ -9,24 +11,21 @@ namespace Xezebo.Managers
     public class UIHandler : MonoBehaviour
     {
         [Inject] private GameManager _gameManager;
-
-        [SerializeField] Canvas _winLevelCanvas;
-        [SerializeField] Canvas _failLevelCanvas;
-
-        [SerializeField] TextMeshProUGUI _ammo;
-        [SerializeField] TextMeshProUGUI _time;
-        [SerializeField] TextMeshProUGUI _health;
-        [SerializeField] TextMeshProUGUI _enemyCount;
+        [Inject(Id = nameof(BindingIdentifiers.win_level_canvas))] Canvas _winLevelCanvas;
+        [Inject(Id = nameof(BindingIdentifiers.fail_level_canvas))] Canvas _failLevelCanvas;
+        [Inject(Id = nameof(BindingIdentifiers.ammo_text))] TextMeshProUGUI _ammo;
+        [Inject(Id = nameof(BindingIdentifiers.time_text))] TextMeshProUGUI _time;
+        [Inject(Id = nameof(BindingIdentifiers.health_text))] TextMeshProUGUI _health;
+        [Inject(Id = nameof(BindingIdentifiers.enemy_count_text))] TextMeshProUGUI _enemyCount;
         
-        [SerializeField] LevelTime _levelTime;
-        
+        GameValues _gameValues;
 
         private void OnEnable()
         {
             _gameManager.OnWinLevel += HandleWinLevel;
             _gameManager.OnFailLevel += HandleFailLevel;
             _gameManager.OnAmmoUpdated += ChangeAmmoText;
-            _gameManager.OnLevelTimeUpdated += ChangeRemainingTimeText;
+            _gameManager.OnLevelTimeUpdated += ChangeTimeText;
             _gameManager.OnPlayerHealthUpdated += ChangeHealthUI;
             _gameManager.OnEnemyCountUpdated += ChangeEnemyCountUI;
         }
@@ -36,7 +35,7 @@ namespace Xezebo.Managers
             _gameManager.OnWinLevel -= HandleWinLevel;
             _gameManager.OnFailLevel -= HandleFailLevel;
             _gameManager.OnAmmoUpdated -= ChangeAmmoText;
-            _gameManager.OnLevelTimeUpdated -= ChangeRemainingTimeText;
+            _gameManager.OnLevelTimeUpdated -= ChangeTimeText;
             _gameManager.OnPlayerHealthUpdated -= ChangeHealthUI;
             _gameManager.OnEnemyCountUpdated += ChangeEnemyCountUI;
         }
@@ -45,8 +44,11 @@ namespace Xezebo.Managers
         {
             _winLevelCanvas.gameObject.SetActive(false);
             _failLevelCanvas.gameObject.SetActive(false);
-            
-            ChangeRemainingTimeText(_levelTime.LevelTimeData); // since the function will be called after a second from game start, player will see whatever value is on the text mesh component for a second and after that time ui will be correct. we don't want this. so we will update time right after game start.
+
+            _gameValues = Resources.Load<GameValues>("GameValues");
+            // If we don't set the values right away they will be wrong until first call of these functions
+            ChangeTimeText(_gameValues.LevelTimeData);
+            ChangeAmmoText(_gameValues.MaxAmmo);
         }
 
         void HandleWinLevel()
@@ -64,7 +66,7 @@ namespace Xezebo.Managers
             _ammo.text = ammo.ToString();
         }
 
-        void ChangeRemainingTimeText(int time)
+        void ChangeTimeText(int time)
         {
             _time.text = time.ToString();
         }

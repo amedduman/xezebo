@@ -1,5 +1,6 @@
 #if !NOT_UNITY3D
 
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,11 +9,11 @@ namespace Zenject
     public class ZenjectBinding : MonoBehaviour
     {
         [Tooltip("The component to add to the Zenject container")]
-        [SerializeField]
+        /*[SerializeField]*/
         Component[] _components = null;
 
         [Tooltip("Note: This value is optional and can be ignored in most cases.  This can be useful to differentiate multiple bindings of the same type.  For example, if you have multiple cameras in your scene, you can 'name' them by giving each one a different identifier.  For your main camera you might call it 'Main' then any class can refer to it by using an attribute like [Inject(Id = 'Main')]")]
-        [SerializeField]
+        /*[SerializeField]*/
         string _identifier = string.Empty;
 
         [Tooltip("When set, this will bind the given components to the SceneContext.  It can be used as a shortcut to explicitly dragging the SceneContext into the Context field.  This is useful when using ZenjectBinding inside GameObjectContext.  If your ZenjectBinding is for a component that is not underneath GameObjectContext then it is not necessary to check this")]
@@ -42,11 +43,13 @@ namespace Zenject
         public Component[] Components
         {
             get { return _components; }
+            set { _components = value; }
         }
 
         public string Identifier
         {
             get { return _identifier; }
+            set { _identifier = value; }
         }
 
         public BindTypes BindType
