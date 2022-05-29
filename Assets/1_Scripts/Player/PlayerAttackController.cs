@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using Xezebo.Enemy;
 using Xezebo.Equipment;
 using Xezebo.Misc;
-using Xezebo.Input;
 using Xezebo.Management;
-using Zenject;
 
 namespace Xezebo.Player
 {

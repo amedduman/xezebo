@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using Xezebo.Equipment;
-using Xezebo.Input;
 using Xezebo.Management;
 using Zenject;
 using Xezebo.Player;
