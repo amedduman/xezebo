@@ -1,66 +1,52 @@
 using UnityEngine;
-using Xezebo.Input;
-using Zenject;
+using Xezebo.EntitiyValues;
+using Xezebo.Management;
 
 namespace Xezebo.Player
 {
-    public class PlayerFollowCamController : MonoBehaviour
+    public class PlayerFollowCamController
     {
-        
-        [Inject] 
-        PlayerInputBroadcaster _playerInputBroadcaster;
-    
-        [Header("CineMachine")]
-        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-        public GameObject cinemachineCameraTarget;
+        InputHandler _inputHandler;
 
-        [SerializeField] float yawSpeed = 1;
-        [SerializeField] float pitchSpeed = 1;
-
-        [Tooltip("How far in degrees can you move the camera up")]
-        public float topClamp = 70.0f;
-
-        [Tooltip("How far in degrees can you move the camera down")]
-        public float bottomClamp = -30.0f;
-
-        [Tooltip("Additional degrees to override the camera. Useful for fine tuning camera position when locked")]
-        public float cameraAngleOverride;
-
-        [Tooltip("For locking the camera position on all axis")]
-        public bool lockCameraPosition;
+        PlayerEntityValues _playerVals;    
 
         // cinemachine
+        GameObject _camTarget;
         private float cinemachineTargetYaw;
         private float cinemachineTargetPitch;
         private const float Threshold = 0.01f;
 
         // input
         Vector2 _lookInput;
-
-        void LateUpdate()
+        
+        public PlayerFollowCamController(InputHandler inputHandler, PlayerEntityValues playerVals, GameObject camTarget)
         {
-            CameraRotation();
+            _inputHandler = inputHandler;
+            _playerVals = playerVals;
+            _camTarget = camTarget;
         }
 
-        private void CameraRotation() 
+        public void CameraRotation() 
         {
-            _lookInput = _playerInputBroadcaster.Look();
+            _lookInput = new Vector2(_inputHandler.Look.x * 400, _inputHandler.Look.y * 100);
+            
             // if there is an input and camera position is not fixed
-            if (_lookInput.sqrMagnitude >= Threshold && !lockCameraPosition)
+            if (_lookInput.sqrMagnitude >= Threshold && !_playerVals.lockCameraPosition)
             {
                 // cinemachineTargetYaw += _lookInput.x * Time.deltaTime * yawSpeed;
                 // cinemachineTargetPitch += _lookInput.y * Time.deltaTime * pitchSpeed;
                 
-                cinemachineTargetYaw += _lookInput.x * yawSpeed;
-                cinemachineTargetPitch += _lookInput.y * pitchSpeed;
+                cinemachineTargetYaw += _lookInput.x * _playerVals.yawSpeed;
+                cinemachineTargetPitch += _lookInput.y * _playerVals.pitchSpeed;
             }
 
             // clamp our rotations so our values are limited 360 degrees
             cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, bottomClamp, topClamp);
+            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, _playerVals.bottomClamp, _playerVals.topClamp);
 
             // Cinemachine will follow this target
-            cinemachineCameraTarget.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + cameraAngleOverride, cinemachineTargetYaw, 0.0f);
+            _camTarget.transform.rotation = 
+            Quaternion.Euler(cinemachineTargetPitch + _playerVals.cameraAngleOverride, cinemachineTargetYaw, 0.0f);
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

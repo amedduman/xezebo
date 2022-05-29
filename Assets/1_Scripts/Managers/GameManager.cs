@@ -7,6 +7,8 @@ namespace Xezebo.Management
     {
         public event Action OnWinLevel;
         public event Action OnFailLevel;
+        public event Action OnNextLevelLoad;
+        public event Action OnLevelRestart;
         public event Action<int> OnAmmoUpdated;
         public event Action<int> OnLevelTimeUpdated;
         public event Action<int> OnPlayerHealthUpdated;
@@ -57,6 +59,16 @@ namespace Xezebo.Management
                 FailLevel();
             }
             OnPlayerHealthUpdated?.Invoke(health);
+        }
+
+        public void LevelRestarted()
+        {
+            OnLevelRestart?.Invoke();
+        }
+
+        public void NextLevelTriggered()
+        {
+            OnLevelRestart?.Invoke();
         }
 
         public void EnemyCountUpdated(int count)

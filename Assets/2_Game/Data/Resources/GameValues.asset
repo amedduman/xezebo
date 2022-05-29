@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956ad68a868f400ebc240730797fe273, type: 3}
   m_Name: GameValues
   m_EditorClassIdentifier: 
-  _levelTime: 20
+  _levelTime: 5
   _playerMaxAmmo: 10
-  _playerMaxHealth: 100
+  _playerMaxHealth: 1000

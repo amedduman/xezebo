@@ -1,53 +1,22 @@
+using Xezebo.EntitiyValues;
 using UnityEngine;
-using Xezebo.Input;
-using Zenject;
+using Xezebo.Management;
 
 namespace Xezebo.Player
 {
     
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController
 {
-	[Inject]
-	PlayerInputBroadcaster _playerInputBroadcaster;
-	
+	PlayerEntity _player;
 	CharacterController _controller;
-	[SerializeField] GameObject mainCamera;
-	[SerializeField] PlayerAnimatorController playerAnimCtrl;
+	PlayerAnimatorController _playerAnimCtrl;
+	Camera _mainCam;
+	InputHandler _inputHandler;
+	PlayerEntityValues _playerEntityValues;
 
-	[Header("Player")]
-	[Tooltip("Move speed of the character in m/s")]
-	public float MoveSpeed = 2.0f;
-	[Tooltip("Sprint speed of the character in m/s")]
-	public float SprintSpeed = 5.335f;
-	[Tooltip("How fast the character turns to face movement direction")]
-	[Range(0.0f, 0.3f)]
-	public float RotationSmoothTime = 0.12f;
-	[Tooltip("Acceleration and deceleration")]
-	public float SpeedChangeRate = 10.0f;
-	public bool ShooterMode;
-
-	[Space(10)]
-	[Tooltip("The height the player can jump")]
-	public float JumpHeight = 1.2f;
-	[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-	public float Gravity = -15.0f;
-
-	[Space(10)]
-	[Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-	public float JumpTimeout = 0.50f;
-	[Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-	public float FallTimeout = 0.15f;
-
-	[Header("Player Grounded")]
 	[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-	public bool Grounded = true;
-	[Tooltip("Useful for rough ground")]
-	public float GroundedOffset = -0.14f;
-	[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
-	public float GroundedRadius = 0.28f;
-	[Tooltip("What layers the character uses as ground")]
-	public LayerMask GroundLayers;
-
+	bool Grounded = true;
+	
 	// timeout deltatime
 	float _jumpTimeoutDelta;
 	float _fallTimeoutDelta;
@@ -60,17 +29,24 @@ public class PlayerMovementController : MonoBehaviour
 	float _verticalVelocity;
 	float _terminalVelocity = 53.0f;
 	
-	void Start()
+	public PlayerMovementController(CharacterController controller, PlayerEntityValues playerEntityValues,
+		PlayerAnimatorController playerAnimCtrl, PlayerEntity player,
+		Camera mainCam, InputHandler inputHandler)
 	{
-		_controller = GetComponent<CharacterController>();
+		_player = player;
+		_controller = controller;
+		_playerAnimCtrl = playerAnimCtrl;
+		_mainCam = mainCam;
+		_playerEntityValues = playerEntityValues;
 		
-		_jumpTimeoutDelta = JumpTimeout;
-		_fallTimeoutDelta = FallTimeout;
+		_jumpTimeoutDelta = _playerEntityValues.JumpTimeout;
+		_fallTimeoutDelta = _playerEntityValues.FallTimeout;
+		_inputHandler = inputHandler;
 	}
 
-	private void Update()
+	public void Tick()
     {
-	    if (ShooterMode)
+	    if (_playerEntityValues.ShooterMode)
 	    {
 		    RotatePlayer();
 	    }
@@ -83,14 +59,15 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (Grounded)
         {
-	        bool jumpInput_ = _playerInputBroadcaster.Jump();
+	        //bool jumpInput_ = _playerEntityValues._playerInputBroadcaster.Jump();
 	        
+	        bool jumpInput = _inputHandler.Jump;
             // reset the fall timeout timer
-            _fallTimeoutDelta = FallTimeout;
+            _fallTimeoutDelta = _playerEntityValues.FallTimeout;
             
             // set animator
-            playerAnimCtrl.Jump(false);
-            playerAnimCtrl.FreeFall(false);
+            _playerAnimCtrl.Jump(false);
+            _playerAnimCtrl.FreeFall(false);
 
             // stop our velocity dropping infinitely when grounded
             if (_verticalVelocity < 0.0f)
@@ -99,13 +76,13 @@ public class PlayerMovementController : MonoBehaviour
             }
 
             // Jump
-            if (jumpInput_ && _jumpTimeoutDelta <= 0.0f)
+            if (jumpInput && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _verticalVelocity = Mathf.Sqrt(_playerEntityValues.JumpHeight * -2f * _playerEntityValues.Gravity);
                 
 	            // set jump animation
-	            playerAnimCtrl.Jump(true);
+	            _playerAnimCtrl.Jump(true);
             }
 
             // jump timeout
@@ -117,7 +94,7 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             // reset the jump timeout timer
-            _jumpTimeoutDelta = JumpTimeout;
+            _jumpTimeoutDelta = _playerEntityValues.JumpTimeout;
 
             // fall timeout
             if (_fallTimeoutDelta >= 0.0f)
@@ -126,38 +103,38 @@ public class PlayerMovementController : MonoBehaviour
             }
             else
             {
-	            playerAnimCtrl.FreeFall(true);
+	            _playerAnimCtrl.FreeFall(true);
             }
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_verticalVelocity < _terminalVelocity)
         {
-            _verticalVelocity += Gravity * Time.deltaTime;
+            _verticalVelocity += _playerEntityValues.Gravity * Time.deltaTime;
         }
     }
     
     private void GroundedCheck()
     {
         // set sphere position, with offset
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+        Vector3 spherePosition = new Vector3(_player.transform.position.x, _player.transform.position.y - _playerEntityValues.GroundedOffset, _player.transform.position.z);
+        Grounded = Physics.CheckSphere(spherePosition, _playerEntityValues.GroundedRadius, _playerEntityValues.GroundLayers, QueryTriggerInteraction.Ignore);
         
-        playerAnimCtrl.Ground(Grounded);
+        _playerAnimCtrl.Ground(Grounded);
     }
 	private void Move()
 	{
-		Vector2 moveInput_ = _playerInputBroadcaster.Move();
-		bool sprintInput_ = _playerInputBroadcaster.Sprint();
+		Vector2 moveInput = _inputHandler.Move;
+		bool sprintInput_ = _inputHandler.Sprint;
 
 		// set target speed based on move speed, sprint speed and if sprint is pressed
-		float targetSpeed_ = sprintInput_ ? SprintSpeed : MoveSpeed;
+		float targetSpeed_ = sprintInput_ ? _playerEntityValues.SprintSpeed : _playerEntityValues.MoveSpeed;
 
 		// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
 		// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 		// if there is no input, set the target speed to 0
-		if (moveInput_ == Vector2.zero) targetSpeed_ = 0.0f;
+		if (moveInput == Vector2.zero) targetSpeed_ = 0.0f;
 
 		// a reference to the players current horizontal velocity
 		float currentHorizontalSpeed_ = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -170,7 +147,7 @@ public class PlayerMovementController : MonoBehaviour
 		{
 			// creates curved result rather than a linear one giving a more organic speed change
 			// note T in Lerp is clamped, so we don't need to clamp our speed
-			_speed = Mathf.Lerp(currentHorizontalSpeed_, targetSpeed_ /* inputMagnitude*/, Time.deltaTime * SpeedChangeRate);
+			_speed = Mathf.Lerp(currentHorizontalSpeed_, targetSpeed_ /* inputMagnitude*/, Time.deltaTime * _playerEntityValues.SpeedChangeRate);
 
 			// round speed to 3 decimal places
 			_speed = Mathf.Round(_speed * 1000f) / 1000f;
@@ -179,16 +156,16 @@ public class PlayerMovementController : MonoBehaviour
 		{
 			_speed = targetSpeed_;
 		}
-		_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed_, Time.deltaTime * SpeedChangeRate);
+		_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed_, Time.deltaTime * _playerEntityValues.SpeedChangeRate);
 
 		// normalise input direction
-		Vector3 inputDirection_ = new Vector3(moveInput_.x, 0.0f, moveInput_.y).normalized;
+		Vector3 inputDirection_ = new Vector3(moveInput.x, 0.0f, moveInput.y).normalized;
 		
 		// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 		// if there is a move input rotate player when the player is moving
-		if (moveInput_ != Vector2.zero)
+		if (moveInput != Vector2.zero)
 		{
-			_targetRotation = Mathf.Atan2(inputDirection_.x, inputDirection_.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
+			_targetRotation = Mathf.Atan2(inputDirection_.x, inputDirection_.z) * Mathf.Rad2Deg + _mainCam.transform.eulerAngles.y;
 			// float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 
 			// rotate to face input direction relative to camera position
@@ -198,12 +175,12 @@ public class PlayerMovementController : MonoBehaviour
 		Vector3 targetDirection_ = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 		
 		// move the player
-		Debug.DrawRay(transform.position, targetDirection_);
+		Debug.DrawRay(_player.transform.position, targetDirection_);
 		_controller.Move(targetDirection_.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
 		// set animation
-		playerAnimCtrl.Move(_animationBlend, 1);
-		playerAnimCtrl.Strafe(moveInput_.x, moveInput_.y);
+		_playerAnimCtrl.Move(_animationBlend, 1);
+		_playerAnimCtrl.Strafe(moveInput.x, moveInput.y);
 	}
 
 	void RotatePlayer()
@@ -218,9 +195,9 @@ public class PlayerMovementController : MonoBehaviour
 		// transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 
 		
-		float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
-		float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, yawCamera, ref _rotationVelocity, RotationSmoothTime);
-		transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+		float yawCamera = _mainCam.transform.rotation.eulerAngles.y;
+		float rotation = Mathf.SmoothDampAngle(_player.transform.eulerAngles.y, yawCamera, ref _rotationVelocity, _playerEntityValues.RotationSmoothTime);
+		_player.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 		// transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), 5 * Time.deltaTime);
 	}
 	
@@ -233,7 +210,7 @@ public class PlayerMovementController : MonoBehaviour
 		else Gizmos.color = transparentRed;
 			
 		// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-		Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+		Gizmos.DrawSphere(new Vector3(_player.transform.position.x, _player.transform.position.y - _playerEntityValues.GroundedOffset, _player.transform.position.z), _playerEntityValues.GroundedRadius);
 	}
 
 }

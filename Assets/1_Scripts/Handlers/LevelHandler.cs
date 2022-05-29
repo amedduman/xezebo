@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -9,39 +8,14 @@ namespace Xezebo.Management
     {
         [Inject] GameManager _gameManager;
 
-        private bool _hasLevelEnd;
-        
         private void OnEnable()
         {
-            _gameManager.OnWinLevel += HandleLevelWin;
-            _gameManager.OnFailLevel += HandleFailLevel;
+            _gameManager.OnLevelRestart += RestartLevel;
         }
 
         private void OnDisable()
         {
-            _gameManager.OnWinLevel -= HandleLevelWin;
-            _gameManager.OnFailLevel -= HandleFailLevel;
-        }
-
-        private void Update()
-        {
-            if (_hasLevelEnd)
-            {
-                if (UnityEngine.Input.GetKeyDown(KeyCode.R))
-                {
-                    RestartLevel();
-                }
-            }
-        }
-
-        private void HandleFailLevel()
-        {
-            _hasLevelEnd = true;
-        }
-
-        private void HandleLevelWin()
-        {
-            _hasLevelEnd = true;
+            _gameManager.OnLevelRestart -= RestartLevel;
         }
 
         void RestartLevel()
