@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Xezebo.Enemy
 {
     public class EnemyMover : MonoBehaviour
     {
+        [Inject] HidingPointsHandler _hidingPointsHandler;
+
         int? currentHidingPointIndex = null;
         NavMeshAgent agent;
 
@@ -67,7 +70,7 @@ namespace Xezebo.Enemy
 
         Vector3 GetRandomDestination()
         {
-            return HidingPointsManager.Instance.GetRandomHidingPoint(ref currentHidingPointIndex).position;
+            return _hidingPointsHandler.GetRandomHidingPoint(ref currentHidingPointIndex).position;
         }
     }
 }

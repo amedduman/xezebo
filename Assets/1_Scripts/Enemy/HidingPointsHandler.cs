@@ -1,12 +1,22 @@
 ﻿using System.Collections.Generic;
-using Xezebo.Misc;
 using UnityEngine;
 
 namespace Xezebo.Enemy
 {
-    public class HidingPointsManager : SingletonTemplate<HidingPointsManager>
+    public class HidingPointsHandler : MonoBehaviour
     {
-        [HideInInspector] public List<Transform> HidingPoints = new List<Transform>();
+        List<Transform> HidingPoints = new List<Transform>();
+
+        private void Start()
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if(transform.GetChild(i).gameObject.activeInHierarchy)
+                {
+                    HidingPoints.Add(transform.GetChild(i));
+                }
+            }
+        }
 
         public Transform GetRandomHidingPoint(ref int? lastRandomPointIndex)
         {
