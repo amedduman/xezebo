@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
 	CharacterController _controller;
 	[SerializeField] GameObject mainCamera;
 	[SerializeField] PlayerAnimatorController playerAnimCtrl;
-
+ 
 	[Header("Player")]
 	[Tooltip("Move speed of the character in m/s")]
 	public float MoveSpeed = 2.0f;

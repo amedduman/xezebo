@@ -15,9 +15,9 @@ public class ResourceHandler : MonoBehaviour
     [SerializeField] LevelTime _levelTimeData;
     [SerializeField] private PlayerMaxHealth _maxHealthData;
     
-    int _ammo;
-    int _levelTime;
-    int _health;
+    public int _ammo;
+    public int _levelTime;
+    public int _health;
 
     Coroutine _decreaseHealthCoroutine;
     Coroutine _increaseHealthCoroutine;
