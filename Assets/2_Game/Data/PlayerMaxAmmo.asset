@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac2fb1448454767ae744cdfb064e885, type: 3}
   m_Name: PlayerMaxAmmo
   m_EditorClassIdentifier: 
-  _playerMaxAmmo: 50
+  _playerMaxAmmo: 1000
