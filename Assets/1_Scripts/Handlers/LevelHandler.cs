@@ -9,44 +9,77 @@ namespace Xezebo.Managers
     {
         [Inject] GameManager _gameManager;
 
-        private bool _hasLevelEnd;
+        bool _hasLevelFail;
+        bool _hasLevelWin;
         
-        private void OnEnable()
+        void OnEnable()
         {
             _gameManager.OnWinLevel += HandleLevelWin;
             _gameManager.OnFailLevel += HandleFailLevel;
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             _gameManager.OnWinLevel -= HandleLevelWin;
             _gameManager.OnFailLevel -= HandleFailLevel;
         }
 
-        private void Update()
+        void Update()
         {
-            if (_hasLevelEnd)
+            if (_hasLevelFail)
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.R))
                 {
                     RestartLevel();
                 }
             }
+
+            else if(_hasLevelWin)
+            {
+                if(UnityEngine.Input.GetKeyDown(KeyCode.Return))
+                {
+                    LoadNextLevel();
+                }
+            }
+
+            #if UNITY_EDITOR
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+                {
+                    RestartLevel();
+                }
+            #endif
         }
 
-        private void HandleFailLevel()
+        void HandleFailLevel()
         {
-            _hasLevelEnd = true;
+            _hasLevelFail = true;
         }
 
-        private void HandleLevelWin()
+        void HandleLevelWin()
         {
-            _hasLevelEnd = true;
+            _hasLevelWin = true;
         }
 
         void RestartLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        void LoadNextLevel()
+        {
+            string activeSceneBuildIndex = SceneManager.GetActiveScene().name;
+            if(activeSceneBuildIndex == "Tutorial")
+            {
+                SceneManager.LoadScene("Level_1");
+            }
+            else if(activeSceneBuildIndex == "Level_1")
+            {
+                SceneManager.LoadScene("Level_2");
+            }
+            else if(activeSceneBuildIndex == "Level_2")
+            {
+                SceneManager.LoadScene("Level_1");
+            }
         }
     }
 }
