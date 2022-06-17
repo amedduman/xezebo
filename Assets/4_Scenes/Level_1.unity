@@ -3042,7 +3042,7 @@ MonoBehaviour:
   _time: {fileID: 2113055091}
   _health: {fileID: 911747610}
   _enemyCount: {fileID: 1086332846}
-  _levelTime: {fileID: 11400000, guid: e4b15497ea45641248d268669f12f959, type: 2}
+  _levelTime: {fileID: 11400000, guid: 4130a3a8c30ba41428ef8db8a3fb1ecb, type: 2}
 --- !u!1001 &740385179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6276,9 +6276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d657a12258093433f90259312b1967d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxAmmoData: {fileID: 11400000, guid: a46e70371d60947beaa6ef66c967e140, type: 2}
-  _levelTimeData: {fileID: 11400000, guid: e4b15497ea45641248d268669f12f959, type: 2}
-  _maxHealthData: {fileID: 11400000, guid: 9f7cc95d4c626453dba5f75ab558c2c5, type: 2}
+  _maxAmmoData: {fileID: 11400000, guid: 33424e94404f446c7a49eb6806458580, type: 2}
+  _levelTimeData: {fileID: 11400000, guid: 4130a3a8c30ba41428ef8db8a3fb1ecb, type: 2}
+  _maxHealthData: {fileID: 11400000, guid: baded90a139d34c29b091b1e88346892, type: 2}
   _ammo: 0
   _levelTime: 0
   _health: 0
@@ -8642,6 +8642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 100
+  _charMeshParent: {fileID: 8695709796524483300}
   _layerMask:
     serializedVersion: 2
     m_Bits: 65

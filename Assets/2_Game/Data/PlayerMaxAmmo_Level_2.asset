@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33d54d10bf464f9b9d388a185dbc76c4, type: 3}
-  m_Name: LevelTime
+  m_Script: {fileID: 11500000, guid: 6ac2fb1448454767ae744cdfb064e885, type: 3}
+  m_Name: PlayerMaxAmmo_Level_2
   m_EditorClassIdentifier: 
-  _levelTime: 1000
+  _playerMaxAmmo: 300
