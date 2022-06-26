@@ -7,6 +7,13 @@ namespace Xezebo.Enemy
     public class HidingPointsManager : SingletonTemplate<HidingPointsManager>
     {
         [HideInInspector] public List<Transform> HidingPoints = new List<Transform>();
+        void Start()
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                HidingPoints.Add(transform.GetChild(i));
+            }
+        }
 
         public Transform GetRandomHidingPoint(ref int? lastRandomPointIndex)
         {

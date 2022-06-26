@@ -83,6 +83,8 @@ public class ResourceHandler : MonoBehaviour
     {
         while (true)
         {
+            yield return null;
+            if(Time.timeScale == 0) continue;
             yield return new WaitForSecondsRealtime(1);
             _levelTime--;
             ClampLevelTime();
@@ -94,6 +96,8 @@ public class ResourceHandler : MonoBehaviour
     { 
         while (true)
         {
+            yield return null;
+            if(Time.timeScale == 0) continue;
             yield return new WaitForSecondsRealtime(.2f); // no magic numbers!!!
             _health -= 2; // no magic numbers!!!
             ClampHealth();
