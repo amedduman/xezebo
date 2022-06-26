@@ -19,4 +19,12 @@ public class Rotator : MonoBehaviour
     {
         
     }
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    private void OnDisable()
+    {
+        DOTween.Kill(this.transform);
+    }
 }
