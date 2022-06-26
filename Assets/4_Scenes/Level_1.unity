@@ -234,11 +234,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d380ad34e750547768fa30d63da04b35, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 99e68a8e88324304c92b3b561fce27b4, type: 2}
+      objectReference: {fileID: 2100000, guid: 18a03a8d1b1c74fcc839ac30d80292c5, type: 2}
     - target: {fileID: -7511558181221131132, guid: d380ad34e750547768fa30d63da04b35, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 99e68a8e88324304c92b3b561fce27b4, type: 2}
+      objectReference: {fileID: 2100000, guid: 18a03a8d1b1c74fcc839ac30d80292c5, type: 2}
     - target: {fileID: 919132149155446097, guid: d380ad34e750547768fa30d63da04b35, type: 3}
       propertyPath: m_Name
       value: Level_1_deneme_3
