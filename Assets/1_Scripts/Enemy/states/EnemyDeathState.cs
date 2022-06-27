@@ -12,9 +12,12 @@ namespace Xezebo.Enemy
         readonly EnemyMover mover;
         readonly GameObject bloodParticle;
         readonly EnemyHandler _enemyHandler;
+        readonly SpriteRenderer _minimapSymbol;
+        
 
         public EnemyDeathState(EnemySM enemySm, EnemyAnimationController animationController, Collider hitBox,
-            EnemyMover mover, GameObject bloodParticle, EnemyHandler enemyHandler)
+            EnemyMover mover, GameObject bloodParticle, EnemyHandler enemyHandler, 
+            SpriteRenderer minimapSymbol)
         {
             this.enemySm = enemySm;
             this.animationController = animationController;
@@ -22,6 +25,7 @@ namespace Xezebo.Enemy
             this.mover = mover;
             this.bloodParticle = bloodParticle;
             _enemyHandler = enemyHandler;
+            _minimapSymbol = minimapSymbol;
         }
         
         public void Enter()
@@ -31,6 +35,7 @@ namespace Xezebo.Enemy
             animationController.TurnRagdoll();
             bloodParticle.SetActive(true);
             _enemyHandler.DeregisterEnemy(enemySm);
+            _minimapSymbol.gameObject.SetActive(false);
         }
 
         public void Tick()
