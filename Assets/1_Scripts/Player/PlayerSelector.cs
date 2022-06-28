@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class PlayerSelector : MonoBehaviour
 {
+    [SerializeField] AudioSource _clickAudio;
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeMeshRight();
+            _clickAudio.Play();
         }
 
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             ChangeMeshLeft();
+            _clickAudio.Play();
         }
     }
 
