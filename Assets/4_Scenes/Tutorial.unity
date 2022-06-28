@@ -5487,7 +5487,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_text
-      value: 'your health is getting low turn back to shield to refill your ammo
+      value: 'your health is getting low turn back to shield to refill your health
 
 
         press
@@ -5495,7 +5495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 48.35
       objectReference: {fileID: 0}
     - target: {fileID: 6700473725607603538, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_Name
@@ -6393,19 +6393,48 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_text
-      value: 'eleminate all enemies before time is up
-
-
-        press any key to
-        continue'
+      value: "eleminate all targets before time is up\n\nmove WASD \nshot left click\nsprint
+        left shift\ntab to toggle minimap\n\npress any key to continue"
       objectReference: {fileID: 0}
     - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_fontSize
-      value: 21.85
+      value: 30.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473724914745707, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6700473725607603538, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_Name
       value: ObjectivePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473725607603628, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473725607603628, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_Color.b
+      value: 0.18867922
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473725607603628, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18867922
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700473725607603628, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
+      propertyPath: m_Color.r
+      value: 0.18867922
       objectReference: {fileID: 0}
     - target: {fileID: 6700473725607603629, guid: e4801f627000f404ea170d4e7b3ea285, type: 3}
       propertyPath: m_Pivot.x
