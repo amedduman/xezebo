@@ -13,11 +13,12 @@ namespace Xezebo.Enemy
         readonly GameObject bloodParticle;
         readonly EnemyHandler _enemyHandler;
         readonly SpriteRenderer _minimapSymbol;
+        readonly AudioSource _terminatedSound;
         
 
         public EnemyDeathState(EnemySM enemySm, EnemyAnimationController animationController, Collider hitBox,
             EnemyMover mover, GameObject bloodParticle, EnemyHandler enemyHandler, 
-            SpriteRenderer minimapSymbol)
+            SpriteRenderer minimapSymbol, AudioSource terminatedSound)
         {
             this.enemySm = enemySm;
             this.animationController = animationController;
@@ -26,6 +27,7 @@ namespace Xezebo.Enemy
             this.bloodParticle = bloodParticle;
             _enemyHandler = enemyHandler;
             _minimapSymbol = minimapSymbol;
+            _terminatedSound = terminatedSound;
         }
         
         public void Enter()
@@ -36,6 +38,7 @@ namespace Xezebo.Enemy
             bloodParticle.SetActive(true);
             _enemyHandler.DeregisterEnemy(enemySm);
             _minimapSymbol.gameObject.SetActive(false);
+            _terminatedSound.Play();
         }
 
         public void Tick()
