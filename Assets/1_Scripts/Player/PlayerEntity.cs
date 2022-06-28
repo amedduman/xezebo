@@ -20,13 +20,15 @@ namespace Xezebo.Player
         Gun _gun;
 
         [SerializeField] LayerMask _layerMask;
+        [SerializeField] AudioSource _shootAudio;
         PlayerAttackController attackHandler;
         
         void Awake()
         {
             SetPlayerMesh();
 
-            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, _gun, _layerMask, _resourceHandler);
+            attackHandler = new PlayerAttackController(_inputBroadcaster, _mainCam, 
+            _gun, _layerMask, _resourceHandler, _shootAudio);
         }
 
         void SetPlayerMesh()
