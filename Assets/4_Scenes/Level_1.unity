@@ -2329,6 +2329,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6498208049237548396, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
+      propertyPath: _levelTime
+      value: 
+      objectReference: {fileID: 11400000, guid: 4130a3a8c30ba41428ef8db8a3fb1ecb, type: 2}
     - target: {fileID: 6498208049334476306, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.1
@@ -2337,6 +2341,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6498208049496796841, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
+      propertyPath: _maxAmmoData
+      value: 
+      objectReference: {fileID: 11400000, guid: 33424e94404f446c7a49eb6806458580, type: 2}
+    - target: {fileID: 6498208049496796841, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
+      propertyPath: _levelTimeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4130a3a8c30ba41428ef8db8a3fb1ecb, type: 2}
+    - target: {fileID: 6498208049496796841, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
+      propertyPath: _maxHealthData
+      value: 
+      objectReference: {fileID: 11400000, guid: baded90a139d34c29b091b1e88346892, type: 2}
     - target: {fileID: 6498208050206720659, guid: 1518ca0e41adc4083952a4f24f557db2, type: 3}
       propertyPath: m_IsActive
       value: 1

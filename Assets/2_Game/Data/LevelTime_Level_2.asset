@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d54d10bf464f9b9d388a185dbc76c4, type: 3}
   m_Name: LevelTime_Level_2
   m_EditorClassIdentifier: 
-  _levelTime: 300
+  _levelTime: 240
